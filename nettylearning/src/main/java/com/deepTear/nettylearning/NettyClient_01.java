@@ -38,6 +38,8 @@ public class NettyClient_01 {
 						@Override
 						protected void initChannel(Channel ch) throws Exception {
 							ChannelPipeline pipeLine = ch.pipeline();
+							/*pipeLine.addLast(new StringEncoder(Charset.forName("utf-8")));
+							pipeLine.addLast(new StringDecoder(Charset.forName("utf-8")));*/
 							pipeLine.addLast(new ClientHandler());
 						}
 					});
@@ -73,6 +75,11 @@ public class NettyClient_01 {
 						b = readLine.getBytes();
 						try {
 							ctx.writeAndFlush(Unpooled.copiedBuffer(ParseUtils.intToByte(b.length),b));
+							readLine = "我们不一样";
+							b = readLine.getBytes();
+							ctx.writeAndFlush(Unpooled.copiedBuffer(ParseUtils.intToByte(b.length),b));
+							/*ctx.writeAndFlush(Unpooled.copiedBuffer("我们不一样".getBytes()));
+							ctx.writeAndFlush(Unpooled.copiedBuffer(b));*/
 						} catch (Exception e) {
 							e.printStackTrace();
 						}

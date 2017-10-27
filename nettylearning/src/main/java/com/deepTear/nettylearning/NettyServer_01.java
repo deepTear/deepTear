@@ -35,6 +35,8 @@ public class NettyServer_01 {
 				@Override
 				protected void initChannel(Channel ch) throws Exception {
 					ChannelPipeline pipeLine = ch.pipeline();
+					/*pipeLine.addLast(new StringDecoder(Charset.forName("utf-8")));
+					pipeLine.addLast(new StringEncoder(Charset.forName("utf-8")));*/
 					pipeLine.addLast(new ServerHandler());
 				}
 
@@ -42,7 +44,7 @@ public class NettyServer_01 {
 			bootStrap.option(ChannelOption.SO_BACKLOG, 128);
 			bootStrap.childOption(ChannelOption.SO_KEEPALIVE, true);
 			ChannelFuture future = bootStrap.bind(socketAddress).sync();
-
+			//future.addListener(ChannelFutureListener.CLOSE);
 			future.channel().closeFuture().sync();
 		} finally {
 			workerGroup.shutdownGracefully();
@@ -68,7 +70,7 @@ public class NettyServer_01 {
 		@Override
 		public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 			ByteBuf buf = (ByteBuf)msg;
-			if(buf.isReadable()){
+			while(buf.isReadable()){
 				buf.readBytes(dataSize);
 				size = ParseUtils.byteToInt(dataSize);
 				System.out.println("客户端消息长度---------->" + size + "  字节");
@@ -79,11 +81,15 @@ public class NettyServer_01 {
 				}
 				System.out.println(readLine);
 			}
+
+			/*readLine = (String)msg;
+			System.out.println(readLine);*/
 		}
 
 		@Override
 		public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 			cause.printStackTrace();
+			ctx.close();
 		}
 
 	}
