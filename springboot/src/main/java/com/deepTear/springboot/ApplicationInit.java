@@ -15,6 +15,7 @@ public class ApplicationInit {
     	SpringApplication app = new SpringApplication(ApplicationInit.class);
         app.addListeners(new ApplicationStartingListener());
         app.addListeners(new ApplicationEnvironmentPreparedListener());
+
         app.run(args);
     }
 }
