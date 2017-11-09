@@ -27,7 +27,7 @@ public class MySelfQueue {
 		return size;
 	}
 
-	public synchronized boolean pushData(int data){
+	public synchronized boolean putData(int data){
 		if(getSize() < capacity){
 			container[nextTailIndex] = data;
 			tailIndex = nextTailIndex;
@@ -42,7 +42,7 @@ public class MySelfQueue {
 		throw new RuntimeException("队列已满");
 	}
 
-	public synchronized int pullData(){
+	public synchronized int getData(){
 		if(getSize() > 0){
 			int rdata = container[headIndex];
 			container[headIndex] = 0;
@@ -89,39 +89,39 @@ public class MySelfQueue {
 
 	public static void main(String[] args) {
 		MySelfQueue queue = new MySelfQueue(5);
-		queue.pushData(1);
-		queue.pushData(2);
-		queue.pushData(3);
-		queue.pushData(4);
-		queue.pushData(5);
+		queue.putData(1);
+		queue.putData(2);
+		queue.putData(3);
+		queue.putData(4);
+		queue.putData(5);
 		System.out.println(queue.getContent());//[1,2,3,4,5]
 		System.out.println("head:" + queue.headIndex + "   tail:" + queue.tailIndex);// head:0   tail:4
-		System.out.println("出队列的值" + queue.pullData() + "  head:" + queue.headIndex + "   tail:" + queue.tailIndex);//出队列的值 1  head:1   tail:4
+		System.out.println("出队列的值" + queue.getData() + "  head:" + queue.headIndex + "   tail:" + queue.tailIndex);//出队列的值 1  head:1   tail:4
 		System.out.println(queue.getContent());//[0,2,3,4,5]
-		System.out.println("出队列的值" + queue.pullData() + "  head:" + queue.headIndex + "   tail:" + queue.tailIndex);//出队列的值 2  head:2   tail:4
+		System.out.println("出队列的值" + queue.getData() + "  head:" + queue.headIndex + "   tail:" + queue.tailIndex);//出队列的值 2  head:2   tail:4
 		System.out.println(queue.getContent());//[0,0,3,4,5]
-		queue.pushData(6);
+		queue.putData(6);
 		System.out.println("head:" + queue.headIndex + "   tail:" + queue.tailIndex);// head:2   tail:0
 		System.out.println(queue.getContent());//[6,0,3,4,5]
-		queue.pushData(7);
+		queue.putData(7);
 		System.out.println("head:" + queue.headIndex + "   tail:" + queue.tailIndex);// head:2   tail:1
 		System.out.println(queue.getContent());//[6,7,3,4,5]
 
 
-		System.out.println("出队列的值" + queue.pullData() + "  head:" + queue.headIndex + "   tail:" + queue.tailIndex);//出队列的值 3  head:3   tail:1
+		System.out.println("出队列的值" + queue.getData() + "  head:" + queue.headIndex + "   tail:" + queue.tailIndex);//出队列的值 3  head:3   tail:1
 		System.out.println(queue.getContent());//[6,7,0,4,5]
-		System.out.println("出队列的值" + queue.pullData() + "  head:" + queue.headIndex + "   tail:" + queue.tailIndex);//出队列的值 4  head:4   tail:1
+		System.out.println("出队列的值" + queue.getData() + "  head:" + queue.headIndex + "   tail:" + queue.tailIndex);//出队列的值 4  head:4   tail:1
 		System.out.println(queue.getContent());//[6,7,0,0,5]
-		System.out.println("出队列的值" + queue.pullData() + "  head:" + queue.headIndex + "   tail:" + queue.tailIndex);//出队列的值 5  head:0   tail:1
+		System.out.println("出队列的值" + queue.getData() + "  head:" + queue.headIndex + "   tail:" + queue.tailIndex);//出队列的值 5  head:0   tail:1
 		System.out.println(queue.getContent());//[6,7,0,0,0]
-		System.out.println("出队列的值" + queue.pullData() + "  head:" + queue.headIndex + "   tail:" + queue.tailIndex);//出队列的值 6  head:1   tail:1
+		System.out.println("出队列的值" + queue.getData() + "  head:" + queue.headIndex + "   tail:" + queue.tailIndex);//出队列的值 6  head:1   tail:1
 		System.out.println(queue.getContent());//[0,7,0,0,0]
-		queue.pushData(8);
+		queue.putData(8);
 		System.out.println(queue.getSize());
 		System.out.println(queue.getContent());//[0,7,8,0,0]
-		System.out.println("出队列的值" + queue.pullData() + "  head:" + queue.headIndex + "   tail:" + queue.tailIndex);//出队列的值 7  head:2   tail:2
+		System.out.println("出队列的值" + queue.getData() + "  head:" + queue.headIndex + "   tail:" + queue.tailIndex);//出队列的值 7  head:2   tail:2
 		System.out.println(queue.getContent());//[0,0,8,0,0]
-		System.out.println("出队列的值" + queue.pullData() + "  head:" + queue.headIndex + "   tail:" + queue.tailIndex);//出队列的值 8  head:0   tail:0
+		System.out.println("出队列的值" + queue.getData() + "  head:" + queue.headIndex + "   tail:" + queue.tailIndex);//出队列的值 8  head:0   tail:0
 		System.out.println(queue.getContent());//[0,0,0,0,0]
 
 		System.out.println(queue.getSize());
