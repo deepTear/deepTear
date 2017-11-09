@@ -55,13 +55,7 @@ public class MySelfBlockingQueue {
 		int rdata = container[headIndex];
 		container[headIndex] = 0;
 		size--;
-
-		if(getSize() == 0){
-			headIndex = 0;
-			tailIndex = 0;
-		}else{
-			headIndex = ++headIndex == capacity ? 0 : headIndex;
-		}
+		headIndex = ++headIndex == capacity ? 0 : headIndex;
 		this.notifyAll();
 		return rdata;
 	}
